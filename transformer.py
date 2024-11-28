@@ -268,7 +268,3 @@ def make_model(src_vocab, tgt_vocab, N=6,
         if p.dim() > 1:
             nn.init.xavier_uniform(p)
     return model
-<<<<<<< HEAD
-=======
-
->>>>>>> 7b824d6 (Learning2)
