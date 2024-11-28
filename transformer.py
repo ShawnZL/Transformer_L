@@ -157,15 +157,14 @@ def attention(query, key, value, mask=None, dropout=None):
         p_attn = dropout(dropout)
     return torch.matmul(p_attn, value), p_attn
 
-<<<<<<< HEAD
+
 class MultiHeadAttention(nn.Module):
     def __init__(self, h, d_model, dropout=0.1):
         super(MultiHeadAttention, self).__init__()
-=======
+
 class MultiHeadedAttention(nn.Module):
     def __init__(self, h, d_model, dropout=0.1):
         super(MultiHeadedAttention, self).__init__()
->>>>>>> e997057 (Learning)
         assert d_model % h == 0
         self.d_k = d_model // h
         self.h = h
@@ -186,24 +185,19 @@ class MultiHeadedAttention(nn.Module):
                              for l, x in zip(self.linears, (query, key, value))]
 
         # 2) Apply attention on all the projected vectors in batch.
-<<<<<<< HEAD
         x, self.attn = attention(query, key, value, mask=mask, dropout=self.dropout)
 
         # 3) "Concat" using a view and apply a final linear.
-=======
         # 此时 x 结果为batch_size h n d_k
         x, self.attn = attention(query, key, value, mask=mask, dropout=self.dropout)
 
         # 3) "Concat" using a view and apply a final linear.
         # contiguous 生成一个内存连续的张量，形状仍为 batchesize, n, h, d_k
         # 在转换为batchsize n h*d_k = batch n d_model
->>>>>>> e997057 (Learning)
         x = x.transpose(1, 2).contiguous().view(nbatches, -1, self.h * self.d_k)
 
         # 将展平后的张量通过最后一个线性层
         return self.linears[-1](x)
-<<<<<<< HEAD
-=======
 
 class PositionwiseFeedForward(nn.Module):
     # 每一层的最后一个都是一个FNN层
@@ -274,4 +268,3 @@ def make_model(src_vocab, tgt_vocab, N=6,
         if p.dim() > 1:
             nn.init.xavier_uniform(p)
     return model
->>>>>>> e997057 (Learning)
